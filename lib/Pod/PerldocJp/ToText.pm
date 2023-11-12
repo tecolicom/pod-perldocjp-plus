@@ -97,6 +97,25 @@ my @encodings =
     return $output;
   }
 
+  sub Pod::Text::wrap {
+    my $self = shift;
+    local $_ = shift;
+    my $spaces = ' ' x $$self{MARGIN};
+    my $width = $$self{opt_width} - $$self{MARGIN};
+
+    use v5.14;
+    use Text::ANSI::Fold qw(:constants);
+    my @output = (state $fold = Text::ANSI::Fold->new(
+      boundary  => 'space',
+      linebreak => LINEBREAK_ALL,
+      runin     => 4,
+      runout    => 4,
+    ))->configure(width => $width - 1)->text($_)->chops;
+    my $output = $spaces . join "\n" . $spaces, @output;
+    $output =~ s/\s+$/\n\n/;
+    return $output;
+  }
+
   sub Pod::Text::output {
     my ($self, $text) = @_;
 

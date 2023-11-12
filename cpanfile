@@ -9,3 +9,4 @@ requires 'Term::Encoding'      => '0';
 requires 'Test::More'          => '0.47';
 requires 'Test::UseAllModules' => '0.10';
 requires 'URI::Escape'         => '0';
+requires 'Text::ANSI::Fold'    => '2.2102';
